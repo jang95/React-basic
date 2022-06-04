@@ -1,2 +1,2 @@
 # React-basic
-Learn the basics of reacnt
+Learn the basics of react
