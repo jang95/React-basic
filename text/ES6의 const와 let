@@ -1,0 +1,36 @@
+const는 ES6 문법에서 새로 도입되었으며 한번 지정하고 나면 변경이 불가능한 상수를 선언할 때 사용하는 키워드
+let은 동적인 값을 담을 수 있는 변수를 선언할 때 사용하는 키워드
+
+ES6 이전에는 값을 담는 데 var 키워드를 사용, var 키워드는 scope(해당 값을 사용할 수 있는 코드 영역)가 함수 단위 입니다.
+
+funtion myFuntion() {
+  var a = "hello";
+  if(true) {
+    var a = "bye";
+    console.log(a); // bye
+  }
+  console.log(a); // bye
+}
+
+myFuntion();
+
+if문 바깥에서 var 값을 hello로 선언하고, if문 내부에서 bye로 설정했습니다. if문 내부에서 새로 선언했음에도 if문 밖에서 a를 조회하면 변경된 값이 나옵니다.
+-> 이런 결점을 해결해 주는 것이 바로 let과 const입니다.
+
+funtion myFuntion() {
+  let a = 1;
+  if(true) {
+    let a = 2;
+    console.log(a); // 2
+  }
+  console.log(a); // 1
+}
+
+myFuntion();
+
+let과 const는 scope가 함수 단위가 아닌 블록 단위이므로, if문 내부에서 선언한 a 값은 if문 밖의 a 값을 변경하지 않습니다.
+
+let과 const를 사용할 때 같은 블록 내부에서 중복 선언이 불가능하다는 점 주의
+그리고 const는 한번 선언하면 재설정 할 수 없습니다.
+
+편하게 생각하면 기본적으로 const를 사용하고, 해당 값을 바꾸어야 할 때는 let를 사용하면 됩니다.
