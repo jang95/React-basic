@@ -29,10 +29,10 @@ class Mycomponent extends Component {
     name: "기본 이름",
   };
 
-  static PropTypes = {
-    name: PropTypes.string,
-    favoriteNumber: PropTypes.number.isRequired,
-  };
+  // static PropTypes = {
+  //   name: PropTypes.string,
+  //   favoriteNumber: PropTypes.number.isRequired,
+  // };
   render() {
     const { name, favoriteNumber, children } = this.props; // 비구조화 할당
     return (
@@ -49,14 +49,14 @@ class Mycomponent extends Component {
 /**
  * props의 값을 부모 컴포넌트에서 따로 지정하지 않았을 때 보여 줄 기본값 설정
  */
-// Mycomponent.defaultProps = {
-//   name: "기본 이름",
-// };
+Mycomponent.defaultProps = {
+  name: "기본 이름",
+};
 
-// Mycomponent.prototype = {
-//   name: PropTypes.string,
-//   favoriteNumber: PropTypes.number.isRequired,
-// };
+Mycomponent.prototype = {
+  name: PropTypes.string,
+  favoriteNumber: PropTypes.number.isRequired,
+};
 
 // 다른 파일에서 이 파일을 import할 때, 위에서 선언한 MyComponent 클래스를 불러오도록 설정
 export default Mycomponent;

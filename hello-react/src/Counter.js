@@ -4,14 +4,22 @@ class Counter extends Component {
   /**
    * 컴포넌트의 생성자 메서드
    */
-  constructor(props) {
-    super(props); // 이 함수가 호출되면 현재 클래스형 컴포넌트가 상속받고 있는 리액트의 Component 클래스가 지닌 생성사 함수 호출
-    // state의 초깃값 설정
-    this.state = {
-      number: 0,
-      fixedNumber: 0,
-    };
-  }
+  // constructor(props) {
+  //   super(props); // 이 함수가 호출되면 현재 클래스형 컴포넌트가 상속받고 있는 리액트의 Component 클래스가 지닌 생성사 함수 호출
+  //   // state의 초깃값 설정
+  //   this.state = {
+  //     number: 0,
+  //     fixedNumber: 0,
+  //   };
+  // }
+
+  /**
+   * constructor에서 꺼내서 사용하는 법
+   */
+  state = {
+    number: 0,
+    fixedNumber: 0,
+  };
   render() {
     const { number, fixedNumber } = this.state; // state를 조회할 때는 this.state로 조회
     return (
