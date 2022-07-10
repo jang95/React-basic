@@ -34,3 +34,27 @@
  * 이 메서드가 false 값을 반환한다면 업데이트 과정은 여기서 중지
  * 현재 props와 state는 this.props와 this.state로 접근하고, 새로 설정될 props 또는 state는
    nextProps와 nextState로 접근 할 수 있음
+
+- getSnapshotBeforeUpdate 메서드
+ 
+ * 이 메서드는 render에서 만들어진 결과물이 브라우저에 실제로 반영되기 직전에 호출
+ * 반환하는 값은 ComponentDidMount에서 세 번째 파라미터인 snapshot 값으로 전달받을 수 있음
+   주로 업데이트하기 직전의 값을 참고할 일이 있을 때 사용(예: 스크롤바 위치 유지).
+
+- componentDidUpdate 메서드
+ componentDidUpdate(prevProps, prevState, snapshot) { ... }
+
+ * 리렌더링을 완료한 후 실행
+ * 업데이트가 끝난 직후이므로, DOM 관련 처리를 해도 무방
+ * prevProps, prevState 사용하여 컴포넌트가 이전에 가졌던 데이터 접근 가능
+ * getSnapshotBeforeUpdate에서 반환한 값이 있다면 여기서 snapshot 값을 전달받을 수 있음
+
+- compoenntWillUnmount 메서드
+ compoenntWillUnmount() { ... }
+ 
+ * 컴포넌트를 DOM에서 제거할 때 실행
+ * ComponentDidMount에서 등록한 이벤트, 타이머, 직접 생선한 DOM이 있다면 여기서 제거 작업을 해야함
+
+ - componentDidCatch 메서드
+
+  * 컴포넌트 렌더링 도중에 에러가 발생했을 때 애플리케이션이 먹통이 되지 않고 오류 UI를 보여 줄 수 있게 해 줌
