@@ -1,4 +1,4 @@
-@import './styles/utils.scss';
+// @import 'utils.scss';
 // // 변수 사용하기
 // $red: #fa5252;
 // $orange: #fcc419;
@@ -15,6 +15,10 @@
 
 .SassComponent {
   display: flex;
+  background: $oc-gray-2;
+  @include media('<768px') {
+    background: $oc-gray-9;
+  }
 
   .box {
     background: red;
