@@ -2,7 +2,8 @@ import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import About from "./About";
 import Home from "./Home";
-import Profile from "./Profile";
+// import Profile from "./Profile";
+import Profiles from "./Profiles";
 
 function App() {
   /**
@@ -18,19 +19,23 @@ function App() {
         <li>
           <Link to="/about">소개</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/profile/velopert">velopert 프로필</Link>
         </li>
         <li>
           <Link to="/profile/gildong">gildong 프로필</Link>
+        </li> */}
+        <li>
+          <Link to="/profiles">프로필</Link>
         </li>
       </ul>
       <hr />
       <Routes>
         <Route path="/" element={<Home />} exact={true} />
-        <Route path="/about" element={<About />}></Route>
-        <Route path="/info" element={<About />}></Route>
-        <Route path="/profile/:username" element={<Profile />}></Route>
+        <Route path="/about" element={<About />} />
+        <Route path="/info" element={<About />} />
+        {/* <Route path="/profile/:username" element={<Profile />} /> */}
+        <Route path="/profiles/*" element={<Profiles />} />
       </Routes>
     </div>
   );
