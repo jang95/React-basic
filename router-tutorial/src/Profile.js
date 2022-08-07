@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
  * eact-router-dom 버전 6부터는 element로 컴포넌트를 만들고,
  * route props(match, history, location)을 받지 않는다.
  * 따라서, useParams, useLocation, useHistory를 사용하여 route context에 접근
+ *
+ * => 리액트 라우터 v6에서는 기존의 useHistory 대신 useNavigate를 사용
  */
 
 const data = {
