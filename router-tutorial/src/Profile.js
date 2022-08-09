@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import WithRouter from "./WithRouter";
 /**
  * eact-router-dom 버전 6부터는 element로 컴포넌트를 만들고,
  * route props(match, history, location)을 받지 않는다.
@@ -32,6 +33,7 @@ const Profile = () => {
         {username}({profile.name})
       </h3>
       <p>{profile.description}</p>
+      <WithRouter />
     </div>
   );
 };

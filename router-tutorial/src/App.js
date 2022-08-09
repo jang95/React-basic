@@ -38,7 +38,7 @@ function App() {
         <Route path="/" element={<Home />} exact={true} />
         <Route path="/about" element={<About />} />
         <Route path="/info" element={<About />} />
-        {/* <Route path="/profile/:username" element={<Profile />} /> */}
+        {/* <Route path="/profile/:username" element={<Profiles />} /> */}
         <Route path="/profiles/*" element={<Profiles />} />
         <Route path="/history" element={<HistorySample />} />
       </Routes>
