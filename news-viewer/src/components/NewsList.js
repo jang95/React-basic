@@ -24,22 +24,22 @@ const NewsitemBlock = styled.div`
 //   urlToImage: 'https://via.placeholder.com/160',
 // };
 
-const NewsList = ({ category }) => {
+const NewsList = ({ categoryObject }) => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(false);
+  console.log('NewList:Category', categoryObject);
 
   useEffect(() => {
     // async를 사용하는 함수 따로 선언
     const fetchData = async () => {
       setLoading(true);
       try {
-        const query = category === 'all' ? '' : `&category=${category}`;
+        const query =
+          categoryObject === 'all' ? '' : `&category=${categoryObject}`;
         const response = await axios.get(
           `https://newsapi.org/v2/top-headlines?country=kr${query}&apiKey=28789fcecf524f2e8e75b1513d6479b1`,
         );
         setArticle(response.data.articles);
-        console.log('받아온 데이터', response.data);
-        console.log('category', category);
         console.log('query', query);
       } catch (e) {
         console.log(e);
@@ -47,7 +47,7 @@ const NewsList = ({ category }) => {
       setLoading(false);
     };
     fetchData();
-  }, [category]);
+  }, [categoryObject]);
 
   // 대기 중일 때
   if (loading) {

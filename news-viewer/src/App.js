@@ -1,6 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import NewsList from './components/NewsList';
-import Categories from './components/Categories';
+// import React, { useState, useCallback } from 'react';
+// import NewsList from './components/NewsList';
+// import Categories from './components/Categories';
+import NewsPage from './pages/NewsPage';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+// import { useParams, useSearchParams } from 'react-router-dom';
 
 // const App = () => {
 //   const [data, setData] = useState(null);
@@ -39,14 +43,28 @@ import Categories from './components/Categories';
 //   );
 // };
 
+// const App = () => {
+//   const [category, setCategory] = useState('all');
+//   const onSelect = useCallback((category) => setCategory(category), []);
+
+//   const { Params } = useParams();
+//   const [searchParams] = useSearchParams();
+//   console.log('Params', Params);
+//   console.log('searchParams', searchParams);
+//   return (
+//     <>
+//       <Categories category={category} onSelect={onSelect} />
+//       <NewsList category={category} />;
+//     </>
+//   );
+// };
+
 const App = () => {
-  const [category, setCategory] = useState('all');
-  const onSelect = useCallback((category) => setCategory(category), []);
   return (
-    <>
-      <Categories category={category} onSelect={onSelect} />
-      <NewsList category={category} />;
-    </>
+    <Routes>
+      {/* <Route path="/:category/*" element={<NewsPage />} />; */}
+      <Route path="/:category/*" element={<NewsPage />} />;
+    </Routes>
   );
 };
 
