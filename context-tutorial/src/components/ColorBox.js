@@ -1,6 +1,7 @@
-import React from "react";
-// import ColorContext from "../contexts/color";
-import { ColorConsumer } from "../contexts/color";
+// import React from "react";
+import React, { useContext } from "react";
+import ColorContext from "../contexts/color";
+// import { ColorConsumer } from "../contexts/color";
 
 /**
  * Consumer 사이에 중괄호를 열어서 그 안에 함수 넣음
@@ -23,28 +24,50 @@ import { ColorConsumer } from "../contexts/color";
 //   );
 // };
 
+// const ColorBox = () => {
+//   return (
+//     <ColorConsumer>
+//       {({ state }) => (
+//         <>
+//           <div
+//             style={{
+//               width: "128px",
+//               height: "128px",
+//               background: state.color,
+//             }}
+//           />
+//           <div
+//             style={{
+//               width: "64px",
+//               height: "64px",
+//               background: state.subcolor,
+//             }}
+//           />
+//         </>
+//       )}
+//     </ColorConsumer>
+//   );
+// };
+
 const ColorBox = () => {
+  const { state } = useContext(ColorContext);
   return (
-    <ColorConsumer>
-      {({ state }) => (
-        <>
-          <div
-            style={{
-              width: "128px",
-              height: "128px",
-              background: state.color,
-            }}
-          />
-          <div
-            style={{
-              width: "64px",
-              height: "64px",
-              background: state.subcolor,
-            }}
-          />
-        </>
-      )}
-    </ColorConsumer>
+    <>
+      <div
+        style={{
+          width: "128px",
+          height: "128px",
+          background: state.color,
+        }}
+      />
+      <div
+        style={{
+          width: "64px",
+          height: "64px",
+          background: state.subcolor,
+        }}
+      />
+    </>
   );
 };
 
