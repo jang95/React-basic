@@ -23,10 +23,10 @@ const Todos = ({
   };
   return (
     <div>
-      <from onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
         <input />
         <button type="submit">등록</button>
-      </from>
+      </form>
       <div>
         <TodoItem />
         <TodoItem />

@@ -12,6 +12,9 @@ const DECREASE = 'counter/DECREASE';
 export const increase = () => ({ type: INCREASE });
 export const decrease = () => ({ type: DECREASE });
 
+// export const actionIncrease = () => ({ type: INCREASE });
+// export const actionDecrease = () => ({ type: DECREASE });
+
 /**
  * 초기 상태 및 리듀서 함수 만들기
  */
