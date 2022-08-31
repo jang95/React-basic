@@ -3,16 +3,29 @@
  * 액션 디스패치
  * - 리덕스 스토어와 연동된 컴포넌트를 컨테이너 컴포넌트라고 부름
  */
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
+// import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import Counter from '../components/Counter';
 // 액션 생성 함수 부르고, 액션 객체를 만든 뒤 디스패치
 import { increase, decrease } from '../modules/counter';
+import { useSelector, useDispatch } from 'react-redux';
 
-const CounterContainer = ({ number, increase, decrease }) => {
+// const CounterContainer = ({ number, increase, decrease }) => {
+const CounterContainer = () => {
+  const number = useSelector((state) => state.counter.number);
+  const dispatch = useDispatch();
+  const onIncrease = useCallback(() => dispatch(increase()), [dispatch]);
+  const onDecrease = useCallback(() => dispatch(decrease()), [dispatch]);
   return (
-    <Counter number={number} onIncrease={increase} onDecrease={decrease} />
+    // <Counter number={number} onIncrease={increase} onDecrease={decrease} />
+    // <Counter number={number} />
+    // <Counter
+    //   number={number}
+    //   onIncrease={() => dispatch(increase())}
+    //   onDecrease={() => dispatch(decrease())}
+    // />
+    <Counter number={number} onIncrease={onIncrease} onDecrease={onDecrease} />
   );
 };
 
@@ -38,12 +51,14 @@ const CounterContainer = ({ number, increase, decrease }) => {
 
 // export default connect(mapStateProps, mapDispatchToProps)(CounterContainer);
 
-export default connect(
-  (state) => ({
-    number: state.counter.number,
-  }),
-  {
-    increase,
-    decrease,
-  },
-)(CounterContainer);
+// export default connect(
+//   (state) => ({
+//     number: state.counter.number,
+//   }),
+//   {
+//     increase,
+//     decrease,
+//   },
+// )(CounterContainer);
+
+export default CounterContainer;
