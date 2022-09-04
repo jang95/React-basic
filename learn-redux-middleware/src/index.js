@@ -1,16 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+// import { createStore, applyMiddleware } from "redux";
 import { createStore } from "redux";
-import { Provider } from "react";
+import { Provider } from "react-redux";
 // import './index.css';
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import rootReducer from "./modules";
+// import loggerMiddleware from "./lib/loggerMiddleware";
 
 // 스토어 생성
+// const store = createStore(rootReducer, applyMiddleware(loggerMiddleware));
 const store = createStore(rootReducer);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   // <React.StrictMode>
   //   <App />
