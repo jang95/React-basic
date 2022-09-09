@@ -1,17 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import { createStore, applyMiddleware } from "redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+// import { createStore } from "redux";
 import { Provider } from "react-redux";
 // import './index.css';
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import rootReducer from "./modules";
 // import loggerMiddleware from "./lib/loggerMiddleware";
+import { createLogger } from "redux-logger";
+import ReduxThunk from "redux-thunk";
 
 // 스토어 생성
+const logger = createLogger();
+const store = createStore(rootReducer, applyMiddleware(logger, ReduxThunk));
 // const store = createStore(rootReducer, applyMiddleware(loggerMiddleware));
-const store = createStore(rootReducer);
+// const store = createStore(rootReducer);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
