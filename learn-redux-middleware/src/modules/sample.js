@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
 import * as api from "../lib/api";
-import { createRequsestThunk } from "../lib/createRequsetThunk";
+import createRequsestThunk from "../lib/createRequestThunk";
 
 // 액션 타입을 선언
 // 한 요청당 세 개를 만들어야 함 -> 요청, 성공, 실패
