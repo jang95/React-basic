@@ -1,5 +1,9 @@
+const nodeExternals = require("webpack-node-externals");
 const paths = require("./paths");
 const getCSSModuleLocalIdent = require("react-dev-utils/getCSSModuleLocalIdent");
+// 환경변수 주입
+const webpack = require.apply("webpack");
+const getClientEnvironment = require.apply("./env");
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -88,17 +92,72 @@ module.exports = {
           {
             test: sassRegex,
             exclude: sassModuleRegex,
-            // exportOnlyLocals: true 옵션을 설정해야 실제 css 파일을 새엇하지 않습니다.
-            loader: require.resolve("css-loader"),
-            options: {
-              importLoaders: 1,
-              modules: {
-                exportOnlyLocals: true,
+            use: [
+              {
+                loader: require.resolve("css-loader"),
+                options: {
+                  importLoaders: 3,
+                  modules: {
+                    exportOnlyLocals: true,
+                  },
+                },
               },
+              require.resolve("sass-loader"),
+            ],
+          },
+          // Sass + CSS ModuleRegx을 위한 처리
+          {
+            test: sassRegex,
+            exclude: sassModuleRegex,
+            use: [
+              {
+                loader: require.resolve("css-loader"),
+                options: {
+                  importLoaders: 3,
+                  modules: {
+                    exportOnlyLocals: true,
+                    getLocalIdent: getCSSModuleLocalIdent,
+                  },
+                },
+              },
+              require.resolve("sass-loader"),
+            ],
+          },
+          // url-loader를 위한 설정
+          {
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            loader: require.resolve("url-loader"),
+            options: {
+              emitFile: false, // 파일을 따로 저장하지 않는 옵션
+              limit: 10000, // 원래는 9.76KB가 넘엉가면 파일로 저장하는데
+              // emitFile 값이 false 일땐 경로만 준비하고 파일은 저장하지 않습니다.
+              name: "static/media/[name].[hash:8].[ext]",
+            },
+          },
+          // 위에서 설정된 확장자를 제외한 파일들은
+          // file-loader를 사용합니다.
+          {
+            loader: require.resolve("file-loader"),
+            exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+            options: {
+              emitFile: false,
+              name: "static/media/[name].[hash:8].[ext]",
             },
           },
         ],
       },
     ],
   },
+  /**
+   * 이렇게 했을 때 react, react-dom/server 같은 라이브러리를 import 구문으로 불러오면 node_modules에서 찾아 사용합니다.
+   * 라이브러리를 불러오면 빌드할 때 결과물 파일 안에 해당 라이브러리 관련 코드가 함께 번들링됩니다.
+   */
+  resolve: {
+    module: ["node_modules"],
+  },
+  externals: [
+    nodeExternals({
+      allowlist: [/@babel/],
+    }),
+  ],
 };
