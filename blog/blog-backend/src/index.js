@@ -9,10 +9,18 @@ const app = new Koa();
  * @param next 현재 처리 중인 미들웨어의 다음 미들웨어를 호출하는 함수
  *             next 함수를 호출하지 않으면, 그다음 미들웨어를 처리하지 않음
  */
-app.use((ctx, next) => {
+app.use(async (ctx, next) => {
   console.log(ctx.url);
   console.log(1);
-  next();
+  if (ctx.query.authorized !== '1') {
+    ctx.status = 401; // Unauthorized
+    return;
+  }
+  // next().then(() => {
+  //   console.log('END');
+  // });
+  await next();
+  console.log('END');
 });
 
 app.use((ctx, next) => {
