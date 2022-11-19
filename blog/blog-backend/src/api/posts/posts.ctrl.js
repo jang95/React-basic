@@ -44,9 +44,31 @@ export const write = async (ctx) => {
 };
 
 export const list = async (ctx) => {
+  // query는 문자열이기 때문에 숫자로 변환해 주어야 합니다.
+  // 값이 주어지지 않았다면 1을 기본으로 사용하빈다.
+  const page = parseInt(ctx.query.page || '1', 10);
+
+  if (page < 1) {
+    ctx.status = 400;
+    return;
+  }
+
   try {
-    const posts = await Post.find().exec(); // find() 함수를 호출한 후에는 exec()를 붙여 주어야 서버에 쿼리 요청.
-    ctx.body = posts;
+    const posts = await Post.find()
+      .sort({ _id: -1 })
+      .limit(10)
+      .skip((page - 1) * 10)
+      .lean()
+      .exec(); // find() 함수를 호출한 후에는 exec()를 붙여 주어야 서버에 쿼리 요청.
+    const postCount = await Post.countDocuments().exec();
+    ctx.set('Last-Page', Math.ceil(postCount / 10));
+    ctx.body = posts
+      // .map((post) => post.toJSON()) // JSON 형태로 변환
+      .map((post) => ({
+        ...post,
+        body:
+          post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+      }));
   } catch (e) {
     ctx.throw(500, e);
   }
