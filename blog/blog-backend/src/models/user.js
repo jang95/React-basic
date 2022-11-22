@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 const UserSchema = new Schema({
   username: String,
-  hashedPass: String,
+  hashedPassword: String,
 });
 
 /**
@@ -16,13 +16,21 @@ UserSchema.methods.setPassword = async function (password) {
 };
 
 // 파라미터로 받은 비밀번호가 해당 계정의 비밀번호와 일치하는지 검증
-UserSchema.method.checkpassword = async function (password) {
+UserSchema.methods.checkpassword = async function (password) {
   const result = await bcrypt.compare(password, this.hashedPassword);
   return result;
 };
 
-UserSchema.static.findByUseename = function (username) {
+UserSchema.statics.findByUsername = function (username) {
   return this.findOne({ username });
 };
+
+// 응답할 데이터에서 hashedPassword 필드 제거
+UserSchema.methods.serialize = function () {
+  const data = this.toJSON();
+  delete data.hashedPassword;
+  return data;
+};
+
 const User = mongoose.model('User', UserSchema);
 export default User;
