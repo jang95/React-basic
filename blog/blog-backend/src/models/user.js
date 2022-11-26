@@ -32,5 +32,6 @@ UserSchema.methods.serialize = function () {
   return data;
 };
 
+// 중간에 있으면 인식이 되지 않음
 const User = mongoose.model('User', UserSchema);
 export default User;
