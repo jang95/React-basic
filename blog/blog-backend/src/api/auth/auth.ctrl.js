@@ -28,6 +28,14 @@ export const register = async (ctx) => {
     await user.save(); // 데이터베이스에 저장
 
     ctx.body = user.serialize();
+
+    // 브라우저 쿠키에 담아서 사용하는 방법
+    const token = user.generateToken();
+    ctx.cookies.set('access_token', token, {
+      maxAge: 1000 * 60 * 24 * 7, // 7일
+      httpOnly: true, // 자바스크립트를 통해 쿠기를 조회할 수 없게 만들어 악성 스크립트로부터 안전
+      // 대신 CSRF라는 공격에 취약해질 수 있음 => CSRF 토큰 사용 및 Referer 검증 등의 방식으로 제대로 막을 수 있음
+    });
   } catch (e) {
     ctx.throw(500, e);
   }

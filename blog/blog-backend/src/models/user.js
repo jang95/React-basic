@@ -33,6 +33,7 @@ UserSchema.methods.serialize = function () {
   return data;
 };
 
+// 토큰 발급하기
 UserSchema.methods.generateToken = function () {
   const token = jwt.sign(
     // 첫번째 파라미터엔 토큰 안에 집어넣고 싶은 데이터를 넣습니다
