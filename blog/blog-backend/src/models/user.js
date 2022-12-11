@@ -17,7 +17,7 @@ UserSchema.methods.setPassword = async function (password) {
 };
 
 // 파라미터로 받은 비밀번호가 해당 계정의 비밀번호와 일치하는지 검증
-UserSchema.methods.checkpassword = async function (password) {
+UserSchema.methods.checkPassword = async function (password) {
   const result = await bcrypt.compare(password, this.hashedPassword);
   return result;
 };

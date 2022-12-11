@@ -64,7 +64,7 @@ export const login = async (ctx) => {
       return;
     }
     ctx.body = user.serialize();
-    const token = user.serialize();
+    const token = user.generateToken();
     ctx.cookies.set('access_token', token, {
       maxAge: 1000 * 60 * 60 * 24 * 7,
       httpOnly: true,
@@ -76,6 +76,13 @@ export const login = async (ctx) => {
 
 export const check = async (ctx) => {
   // 로그인 상태 확인
+  const { user } = ctx.state;
+  if (!user) {
+    // 로그인 중 아님
+    ctx.status = 401; // Unauthorized
+    return;
+  }
+  ctx.body = user;
 };
 
 export const logout = async (ctx) => {
