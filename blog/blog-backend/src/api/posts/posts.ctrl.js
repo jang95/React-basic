@@ -16,12 +16,12 @@ export const checkObjectId = (ctx, next) => {
 export const write = async (ctx) => {
   const schema = Joi.object().keys({
     // 객체가 다음 필드를 가지고 있음을 검증
-    title: Joi.string().required(), // requiered()가 있으면 필수 항목
+    title: Joi.string().required(), // required() 가 있으면 필수 항목
     body: Joi.string().required(),
     tags: Joi.array().items(Joi.string()).required(), // 문자열로 이루어진 배열
   });
 
-  // 검증하고 나서 검증 실패인 경우 에러 처리
+  // 검증 후, 검증 실패시 에러처리
   const result = schema.validate(ctx.request.body);
   if (result.error) {
     ctx.status = 400; // Bad Request
@@ -34,9 +34,10 @@ export const write = async (ctx) => {
     title,
     body,
     tags,
+    user: ctx.state.user,
   });
   try {
-    await post.save(); // 데이터베이스에 저장, 저장 요청 완료할 때까지 대기
+    await post.save();
     ctx.body = post;
   } catch (e) {
     ctx.throw(500, e);

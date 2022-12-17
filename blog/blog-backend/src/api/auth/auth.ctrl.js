@@ -86,5 +86,7 @@ export const check = async (ctx) => {
 };
 
 export const logout = async (ctx) => {
-  // 로그아웃
+  // 로그아웃 기능, 쿠키를 지워주기만 하면 끝
+  ctx.cookies.set('access_token');
+  ctx.status = 204; // No Content
 };
