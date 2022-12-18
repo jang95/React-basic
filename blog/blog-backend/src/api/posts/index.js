@@ -10,10 +10,10 @@ posts.post('/', checkLoggedIn, postsCtrl.write);
 const post = new Router(); // /api/posts/:id
 post.get('/', postsCtrl.read);
 
-post.delete('/', checkLoggedIn, postsCtrl.remove);
-post.patch('/', checkLoggedIn, postsCtrl.update);
+post.delete('/', checkLoggedIn, postsCtrl.checkOwnPost, postsCtrl.remove);
+post.patch('/', checkLoggedIn, postsCtrl.checkOwnPost, postsCtrl.update);
 
-posts.use('/:id', postsCtrl.checkObjectId, post.routes());
+posts.use('/:id', postsCtrl.getPostId, post.routes());
 
 // posts.get('/:id', postsCtrl.checkObjectId, postsCtrl.read);
 // posts.delete('/:id', postsCtrl.checkObjectId, postsCtrl.remove);
