@@ -1,0 +1,17 @@
+import produce from '../../node_modules/immer/dist/immer'; 13장
+
+const nextState = produce(originalState, (draft) => {
+  // 바꾸고 싶은 값 바꾸기
+  draft.somewhere.deep.inside = 5;
+});
+
+produce라는 함수의 첫번째 파라미터는 [수정하고 싶은 상태]이고,
+                  두번재 파라미터는 [상태를 어떻게 업데이트할지 정의]하는 함수
+
+'불변성에 신경 쓰지 않는 것처럼 코드를 작성하되 불변성 관리는 제대로 해 주는 것'
+
+immer을 사용하여 컴포넌트 상태를 작성할 때는 객체 안에 있는 값을 직접 수정하거나,
+배열에 직접적인 변화를 일으키는 push, splice 등의 함수를 사용해도 무방
+
+* 추가 내용
+  1. 함수형 업데이트 복습 -> 296p
