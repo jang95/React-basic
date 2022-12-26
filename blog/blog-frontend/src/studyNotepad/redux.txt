@@ -1,0 +1,8 @@
+useSelector: Redux의 store state에 데이터를 등록할 수 있다
+             => 등록 한 데이터를 가져와서 쓸 수 있다
+             * 초기 상태값 등록
+
+useDispatch: hook은 Redux 저장소에서 함수에 대한 참조를 반환
+             => redux의 액션 함수를 실행해서 redux store에 변경된 state값을 [저장]하기 위해서 useDispatch라는 리액트 훅을 사용하여 [액션을 실행]시켜야 합니다
+
+             dispatch를 이용 -> 액션함수 실행 -> state저장 & 변경
