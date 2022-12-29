@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeField, initializeForm, register } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
@@ -13,7 +13,11 @@ const RegisterFrom = () => {
     authError: auth.authError,
     user: user.user,
   }));
-  const Navigate = useNavigate();
+
+  const navigate = useNavigate();
+
+  const [error, setError] = useState(null);
+
   // 인풋 변경 이벤트 핸들러
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -30,9 +34,18 @@ const RegisterFrom = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const { username, password, passwordConfirm } = form;
-    console.log('onSubmit', form);
+    // 하나라도 비어있다면
+    if ([username, password, passwordConfirm].includes('')) {
+      setError('빈 칸을 모두 입력하세요.');
+      return;
+    }
+    // 비밀번호가 일치하지 않는다면
     if (password !== passwordConfirm) {
-      // TODO: 오류 처리
+      setError('비밀번호가 일치하지 않습니다.');
+      dispatch(changeField({ form: 'register', key: 'password', value: '' }));
+      dispatch(
+        changeField({ form: 'register', key: 'passwordConfirm', value: '' }),
+      );
       return;
     }
     dispatch(register({ username, password }));
@@ -43,11 +56,16 @@ const RegisterFrom = () => {
     dispatch(initializeForm('register'));
   }, [dispatch]);
 
-  // 회원가입 성공/실패 처리
+  // 회원가입 성공 / 실패 처리
   useEffect(() => {
     if (authError) {
-      console.log('오류 발생');
-      console.log(authError);
+      // 계정명이 이미 존재할 때
+      if (authError.response.status === 409) {
+        setError('이미 존재하는 계정명입니다.');
+        return;
+      }
+      // 기타 이유
+      setError('회원가입 실패');
       return;
     }
 
@@ -63,9 +81,9 @@ const RegisterFrom = () => {
     if (user) {
       console.log('check API 성공');
       console.log(user);
-      Navigate('/');
+      navigate('/');
     }
-  }, [user, Navigate]);
+  }, [user, navigate]);
 
   return (
     <AuthForm
@@ -73,6 +91,7 @@ const RegisterFrom = () => {
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
+      error={error}
     />
   );
 };
