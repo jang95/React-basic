@@ -1,8 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 
-const StyledButton = styled.button`
+// Link component를 직접 사용하는 방법
+const buttonStyle = css`
   border: none;
   border-radius: 4px;
   font-size: 1rem;

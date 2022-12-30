@@ -57,6 +57,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (user) {
       navigate('/');
+      // 브라우저 내장 localStorage
       try {
         localStorage.setItem('user', JSON.stringify(user));
       } catch (e) {
