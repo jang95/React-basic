@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 
+// Quill 에디터는 일반 input이나 textarea가 아니기 때문에 onChange와 value를 사용하여 상태를 관리할 수 없음
+
 const EditorBlock = styled(Responsive)`
   /* 페이지 위 아래 여백 지정 */
   padding-top: 5rem;
