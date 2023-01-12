@@ -8,3 +8,5 @@ export const writePost = ({ title, body, tags }) =>
     body,
     tags,
   });
+
+export const readPost = (id) => client.get(`/api/posts/${id}`);
