@@ -8,11 +8,6 @@ const PostViewerContainer = () => {
   // 처음 마운트될 때 포스트 읽기 API 요청
   const { postId } = useParams();
   const dispatch = useDispatch();
-  const { post, error, loading } = useSelector(({ post, loading }) => ({
-    post: post.post,
-    error: post.error,
-    loading: loading['post/READ_POST'],
-  }));
 
   useEffect(() => {
     dispatch(readPost(postId));
@@ -21,6 +16,12 @@ const PostViewerContainer = () => {
       dispatch(unloadPost());
     };
   }, [dispatch, postId]);
+
+  const { post, error, loading } = useSelector(({ post, loading }) => ({
+    post: post.post,
+    error: post.error,
+    loading: loading['post/READ_POST'],
+  }));
 
   return <PostViewer post={post} loading={loading} error={error} />;
 };

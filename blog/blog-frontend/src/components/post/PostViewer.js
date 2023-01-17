@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import getTag from '../../../node_modules/lodash/_getTag';
+// import getTag from '../../../node_modules/lodash/_getTag';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 // import SubInfo from '../common/SubInfo';
@@ -51,6 +51,11 @@ const PostContent = styled.div`
 `;
 
 const PostViewer = ({ post, error, loading }) => {
+  // useEffect(() => {
+  //   console.log('post', post);
+  //   console.log('error', error);
+  //   console.log('loading', loading);
+  // }, [post, error, loading]);
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -65,7 +70,7 @@ const PostViewer = ({ post, error, loading }) => {
   }
 
   const { title, body, user, publishedDate, tags } = post;
-  // const { title, body } = post;
+
   return (
     <PostViewerBlock>
       <PostHead>
@@ -78,42 +83,13 @@ const PostViewer = ({ post, error, loading }) => {
         </SubInfo>
         <Tags>
           {tags.map((tag) => (
-            <div className="tag">#{getTag}</div>
+            <div className="tag">#{tag}</div>
           ))}
         </Tags>
       </PostHead>
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
     </PostViewerBlock>
   );
-  // return (
-  //   <PostViewerBlock>
-  //     <PostHead>
-  //       {/* <h1>{title}</h1> */}
-  //       <h1>제목</h1>
-  //       <SubInfo>
-  //         <span>
-  //           <b>tester</b>
-  //         </span>
-  //         <span>{new Date().toLocaleDateString()}</span>
-  //       </SubInfo>
-  //       <Tags>
-  //         <div className="tag">#태그1</div>
-  //         <div className="tag">#태그2</div>
-  //         <div className="tag">#태그3</div>
-  //       </Tags>
-  //       {/* <SubInfo
-  //         username={user.username}
-  //         publishedDate={publishedDate}
-  //         hasMarginTop
-  //       /> */}
-  //       {/* <Tags tags={tags} /> */}
-  //     </PostHead>
-  //     {/* <PostContent dangerouslySetInnerHTML={{ __html: body }} /> */}
-  //     <PostContent
-  //       dangerouslySetInnerHTML={{ __html: '<p>HTML <b>내용</b>입니다 </p>' }}
-  //     />
-  //   </PostViewerBlock>
-  // );
 };
 
 export default PostViewer;
