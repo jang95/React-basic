@@ -1,7 +1,7 @@
 import Post from '../../models/post';
 import mongoose from 'mongoose';
 import Joi from '../../../node_modules/joi/lib/index';
-
+import sanitizeHtml from 'sanitize-html';
 const { ObjectId } = mongoose.Types;
 
 // export const checkObjectId = (ctx, next) => {
@@ -12,6 +12,33 @@ const { ObjectId } = mongoose.Types;
 //   }
 //   return next();
 // };
+
+/*
+ 악성 스크립트가 주입되는 것을 방지하기 위해 특정 태그와 특정 속성만 허용
+*/
+const sanitizeOption = {
+  allowedTags: [
+    'h1',
+    'h2',
+    'b',
+    'i',
+    'u',
+    's',
+    'p',
+    'ul',
+    'ol',
+    'li',
+    'blockquote',
+    'a',
+    'img',
+  ],
+  allowedAttributes: {
+    a: ['href', 'name', 'target'],
+    img: ['src'],
+    li: ['class'],
+  },
+  allowedSchemes: ['data', 'http'],
+};
 
 export const getPostId = (ctx, next) => {
   const { id } = ctx.params;
@@ -41,7 +68,7 @@ export const write = async (ctx) => {
   const { title, body, tags } = ctx.request.body;
   const post = new Post({
     title,
-    body,
+    body: sanitizeHtml(body, sanitizeOption),
     tags,
     user: ctx.state.user,
   });
@@ -53,6 +80,16 @@ export const write = async (ctx) => {
   }
 };
 
+const removeHtmlAndShorten = (body) => {
+  const filtered = sanitizeHtml(body, {
+    allowedTags: [],
+  });
+  return filtered.length < 200 ? filtered : `${filtered.slice(0, 200)}...`;
+};
+
+/*
+  GET /api/posts?username=&tag=&page=
+*/
 export const list = async (ctx) => {
   // query는 문자열이기 때문에 숫자로 변환해 주어야 합니다.
   // 값이 주어지지 않았다면 1을 기본으로 사용합니다.
@@ -102,7 +139,8 @@ export const list = async (ctx) => {
       .map((post) => ({
         ...post,
         body:
-          post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+          // post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+          removeHtmlAndShorten(post.body),
       }));
   } catch (e) {
     ctx.throw(500, e);
@@ -157,6 +195,12 @@ export const update = async (ctx) => {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
     return;
+  }
+
+  const nextData = { ...ctx.request.body }; // 객체를 복사하고
+  // body값이 주어졌으면 HTML 필터링
+  if (nextData.body) {
+    nextData.body = sanitizeHtml(nextData.body, sanitizeOption);
   }
 
   try {
