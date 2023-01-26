@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import WriteActionButtons from '../../components/write/WriteActionButtons';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { writePost, updatePost } from '../../modules/write';
+import { useNavigate } from 'react-router-dom';
 
 const WriteActionButtonsContainer = () => {
   const navigate = useNavigate();
@@ -40,6 +40,7 @@ const WriteActionButtonsContainer = () => {
 
   // 성공 혹은 실패시 할 작업
   useEffect(() => {
+    console.log('성공 혹은 실패시 할 작업', post);
     if (post) {
       const { _id, user } = post;
       navigate(`/@${user.username}/${_id}`);
